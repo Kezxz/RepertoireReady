@@ -49,6 +49,14 @@ class PieceLibrary():
                 return True
             
         return False
+    
+
+    def delete_piece(self, piece_id):
+        for piece in self.pieces:
+            if piece.piece_id == piece_id:
+                self.pieces.remove(piece)
+                return True
+        return False
 
 
 
@@ -61,19 +69,56 @@ class PieceLibrary():
                 print(f'{piece.piece_id} - {piece.title}: {piece.composer}, {piece.genre}, {piece.readiness_status}, {piece.created}')
 
 
+    def filter_by_readiness(self, readiness_status):
+        found = False
+
+        for piece in self.pieces:
+            if piece.readiness_status.lower() == readiness_status.lower():
+                found = True
+                if piece.updated:
+                    print(f'{piece.piece_id} - {piece.title}: {piece.composer}, {piece.genre}, {piece.readiness_status}, {piece.created}, {piece.updated}')
+                else:
+                    print(f'{piece.piece_id} - {piece.title}: {piece.composer}, {piece.genre}, {piece.readiness_status}, {piece.created}')
+
+        
+        if not found:
+            print(f'No pieces found with {readiness_status} readiness status.')
+
+
+
+
 
 
 if __name__ == '__main__':
     library = PieceLibrary()
 
     p1 = Piece(1, "The Ruins of Athens", "Beethoven", "Classical", "Ready", 12)
-    p2 = Piece(2, "Happy", "John", "Pop", "Prep", 14)
+    p2 = Piece(2, "Pet Sounds", "The Beach Boys", "Chamber Pop", "Learning", 14)
+    p3 = Piece(3, "XX", "The xx", "Classical", "Indie Pop", 16)
+    p4 = Piece(4, "Jaws", "John Williams", "Classical", "Ready", 22)
 
+    # Testing add_piece
     library.add_piece(p1)
     library.add_piece(p2)
-
+    library.add_piece(p3)
+    library.add_piece(p4)
+    #Testing list_pieces
+    print(f'List Pieces:\n')
     library.list_pieces()
 
-    library.edit_piece(2, "Sad", "Alex", "Metal", "Not Ready")
 
+    #Testing edit_piece
+    library.edit_piece(2, "The Lonly Shepherd", "Zamfir", "Classical", "Rehearsing")
+    print(f'\nEdited Pieces:\n')
     library.list_pieces() 
+
+
+    # Testing delete_piece
+    library.delete_piece(3)
+    print(f'\nDeleted Pieces:\n')
+    library.list_pieces()
+
+
+    #Testing filter_by_readiness
+    print(f'\nFilter:\n')
+    library.filter_by_readiness("Ready")
