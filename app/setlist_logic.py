@@ -23,7 +23,6 @@ class Performance:
     def show(self):
         print(f"Setlist: {self.title} | {self.date} | {self.location} | user={self.user_id}")
 
-
 class Setlist_Item:
     def __init__(self, setlist_item_id, performance_id, piece_id, order_index):
         self.setlist_item_id = setlist_item_id
@@ -34,7 +33,6 @@ class Setlist_Item:
     def show(self):
         print(f"{self.order_index}. piece_id={self.piece_id} (item_id={self.setlist_item_id})")
 
-# Required functions
 def create_setlist(performance_id, title, date, location, user_id):
     """
     Creates a setlist (Performance).
