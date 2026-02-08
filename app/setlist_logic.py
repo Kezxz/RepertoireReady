@@ -11,7 +11,7 @@
 # - Performance = the setlist container
 # - Setlist_Item = one entry inside the setlist (with order_index)
 
-# Data classes (simple)
+# Data classes
 class Performance:
     def __init__(self, performance_id, title, date, location, user_id):
         self.performance_id = performance_id
@@ -119,25 +119,3 @@ def _renumber_setlist(setlist_items, performance_id):
 
     for i, it in enumerate(items, start=1):
         it.order_index = i
-
-# Quick demo (run this file)
-if __name__ == "__main__":
-    my_setlist = create_setlist(1, "Spring Concert", "2026-04-10", "Auditorium", 12)
-
-    items = []
-    add_piece_to_setlist(items, 1, 101)
-    add_piece_to_setlist(items, 1, 202)
-    add_piece_to_setlist(items, 1, 303)
-
-    print("\nOriginal:")
-    view_setlist(my_setlist, items)
-
-    move_up(items, 1, 3)
-
-    print("\nAfter move_up(3):")
-    view_setlist(my_setlist, items)
-
-    remove_piece_from_setlist(items, 1, 2)
-
-    print("\nAfter remove_piece_from_setlist(order_index=2):")
-    view_setlist(my_setlist, items)
