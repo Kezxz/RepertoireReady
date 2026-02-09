@@ -18,21 +18,21 @@ The goals are to implement the following features:
     - Users can reorder setlists (move up/down) and the change is automatically saved
 
 # File Descriptions
-*main.py*
+- *main.py*
     - entry point for terminal application, handles the main menu and user interaction
-*models.py*
+- *models.py*
     - defines the core data structure used in the program
-*piece_logic.py*
+- *piece_logic.py*
     - implements all repertoire-related functionality
-*setlist_logic.py*
+- *setlist_logic.py*
     - implements all setlist-related functionality
-*storage.py*
+- *storage.py*
     - handles saving and loading data for pieces and setlists
-*data/*
+- *data/*
     - stores persistence files in .csv format
 
 # How to Run
-From the root folder, just run: python app/main.py
+From the root folder, run: python app/main.py
 
 # Notes
 This repository is intended to be built incrementally through multiple sprints. Features such as performance events, user accounts, and a full UI are planned for future sprints after the core functionality is complete.
