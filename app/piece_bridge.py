@@ -9,7 +9,7 @@ READINESS = ["learning", "rehearsing", "performance-ready"]
 _LIB = tpl.PieceLibrary()
 
 
-# ----------- Helpers (IDs, lookups, resolution) ----------- #
+# ----------- Helpers ----------- #
 
 def _next_piece_id() -> int:
     return max([p.piece_id for p in _LIB.pieces], default=0) + 1
@@ -26,7 +26,7 @@ def _next_simple_piece_id() -> int:
 def exists_piece_id(pid: int) -> bool:
     return any(p.piece_id == pid for p in _LIB.pieces)
 
-# accepts: simple id, internal id, or partial title.
+# accepts: simple id, internal id, or partial title
 # returns the internal piece_id
 def _resolve_piece_ref(ref: str) -> int | None:
     s = (ref or "").strip()
@@ -63,52 +63,81 @@ def _resolve_piece_ref(ref: str) -> int | None:
     return None
 
 
-# ---------- CSV persistence for teammate model ---------- #
+# ---------- CSV persistence (under data/) ---------- #
 
-PIECES_CSV = "pieces.csv"
+PIECES_CSV = os.path.join("data", "piece_library.csv")
 PIECE_HEADER = ["piece_id", "simple_id", "title", "composer", "genre",
                 "readiness_status", "user_id", "created", "updated"]
+
+def _ensure_parent(path: str) -> None:
+    parent = os.path.dirname(path)
+    if parent and not os.path.exists(parent):
+        os.makedirs(parent, exist_ok=True)
+
+def _file_data_line_count(path: str) -> int:
+    """Return number of non-header lines in the CSV (len(rows))."""
+    if not os.path.exists(path):
+        return 0
+    try:
+        with open(path, "r", encoding="utf-8", errors="ignore") as f:
+            # subtract 1 for header if file has at least one line
+            lines = f.read().splitlines()
+            return max(0, len(lines) - 1)
+    except Exception:
+        return 0
 
 # load pieces into library
 def load_from_csv(path: str = PIECES_CSV) -> None:
     _LIB.pieces.clear()
+    _ensure_parent(path)
+
     if not os.path.exists(path):
-        with open(path, "w", newline="") as f:
+        with open(path, "w", newline="", encoding="utf-8") as f:
             csv.writer(f).writerow(PIECE_HEADER)
         return
 
-    with open(path, newline="") as f:
+    with open(path, newline="", encoding="utf-8-sig", errors="ignore") as f:
         rd = csv.DictReader(f)
+        if rd.fieldnames and len(rd.fieldnames) == 1 and ";" in rd.fieldnames[0]:
+            f.seek(0)
+            rd = csv.DictReader(f, delimiter=";")
+
         for r in rd:
             try:
-                pid = int(r.get("piece_id") or 0)
+                raw_id = r.get("piece_id")
+                pid = int(raw_id) if (raw_id and str(raw_id).strip().isdigit()) else 0
             except ValueError:
-                continue
+                pid = 0  # tolerate bad ids; we'll still create the row
 
             p = tpl.Piece(
                 piece_id=pid,
-                title=r.get("title", ""),
-                composer=r.get("composer", ""),
-                genre=r.get("genre", ""),
+                title=r.get("title", "") or "",
+                composer=r.get("composer", "") or "",
+                genre=r.get("genre", "") or "",
                 readiness_status=(r.get("readiness_status", "learning") or "learning").strip().lower(),
-                user_id=int(r.get("user_id") or 0),
+                user_id=int((r.get("user_id") or "0").strip() or 0),
             )
             # keep what's in CSV
-            p.created = r.get("created") or None
-            p.updated = r.get("updated") or None
+            p.created = (r.get("created") or "").strip() or None
+            p.updated = (r.get("updated") or "").strip() or None
             si_raw = r.get("simple_id")
-            p.simple_id = int(si_raw) if (si_raw and si_raw.isdigit()) else 0
+            p.simple_id = int(si_raw) if (si_raw and str(si_raw).strip().isdigit()) else 0
 
-            # Append directly to library to avoid add_piece() resetting dates
             _LIB.pieces.append(p)
 
-    # Backfill simple_id for any rows missing it
+    # backfill simple_id for any rows missing it
     for p in _LIB.pieces:
         if not getattr(p, "simple_id", 0):
             p.simple_id = _next_simple_piece_id()
 
 def save_to_csv(path: str = PIECES_CSV) -> None:
-    with open(path, "w", newline="") as f:
+    _ensure_parent(path)
+
+    if len(_LIB.pieces) == 0 and _file_data_line_count(path) > 0:
+        print("[warn] Library is empty; refusing to overwrite non-empty CSV. No changes saved.")
+        return
+
+    with open(path, "w", newline="", encoding="utf-8") as f:
         wr = csv.writer(f)
         wr.writerow(PIECE_HEADER)
         for p in _LIB.pieces:

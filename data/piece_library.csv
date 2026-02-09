@@ -1,0 +1,5 @@
+piece_id,simple_id,title,composer,genre,readiness_status,user_id,created,updated
+1,1,Ondine,Ravel,Classical,learning,0,2026-02-08,
+2,2,Take Five,Dave Brubeck,Jazz,rehearsing,0,2026-02-08,
+3,3,La Plus Que Lente,Debussy,Classical,performance-ready,0,2026-02-08,
+4,4,Hallelujah,Leonard Cohen,Folk,learning,0,2026-02-08,

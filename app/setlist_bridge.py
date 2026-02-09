@@ -3,13 +3,17 @@ import os
 from typing import Dict, List
 import setlist_logic as sl
 
-SETLISTS_CSV = "setlists.csv"
+SETLISTS_CSV = os.path.join("data", "setlist_library.csv")
 SETLIST_HEADER = ["id", "simple_id", "title", "date", "location", "user_id", "piece_ids"]
 
 # in-memory state owned for bridge
 _performances: Dict[int, sl.Performance] = {}
 _items: List[sl.Setlist_Item] = []
 
+def _ensure_parent(path: str) -> None:
+    parent = os.path.dirname(path)
+    if parent and not os.path.exists(parent):
+        os.makedirs(parent, exist_ok=True)
 
 # ----------- Helpers ----------- #
 
@@ -64,12 +68,13 @@ def _resolve_setlist_ref(ref: str) -> int | None:
     return None
 
 
-# ----------- Persistence (working on now) ----------- #
+# ----------- Persistence ----------- #
 
 def load_setlists(path: str = SETLISTS_CSV) -> None:
     """Load performances + their items from CSV into in-memory state."""
     _performances.clear()
     _items.clear()
+    _ensure_parent(path)
 
     if not os.path.exists(path):
         with open(path, "w", newline="") as f:
@@ -108,6 +113,7 @@ def load_setlists(path: str = SETLISTS_CSV) -> None:
 
 # save performances and their piece orders to CSV
 def save_setlists(path: str = SETLISTS_CSV) -> None:
+    _ensure_parent(path)
     with open(path, "w", newline="") as f:
         wr = csv.writer(f)
         wr.writerow(SETLIST_HEADER)
