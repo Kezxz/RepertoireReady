@@ -1,6 +1,6 @@
 from piece_bridge import (
     load_from_csv, save_to_csv,
-    list_pieces, add_piece, edit_piece, delete_piece, filter_by_readiness,
+    list_pieces, add_piece, edit_piece, delete_piece, filter_by_readiness, filter_by_attribute,
     exists_piece_id,
 )
 from setlist_bridge import (
@@ -17,14 +17,16 @@ def pieces_menu():
         print("3) Edit piece")
         print("4) Delete piece")
         print("5) Filter by readiness")
-        print("6) Back")
+        print("6) Search by Composer/Genre")
+        print("7) Back")
         choice = input("> ").strip()
         if choice == "1": list_pieces()
         elif choice == "2": add_piece()
         elif choice == "3": edit_piece()
         elif choice == "4": delete_piece()
         elif choice == "5": filter_by_readiness()
-        elif choice == "6": return
+        elif choice == "6"; filter_by_attribute()
+        elif choice == "7": return
         else: print("Invalid.")
 
 def setlists_menu():
