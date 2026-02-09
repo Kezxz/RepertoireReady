@@ -228,17 +228,41 @@ def delete_piece() -> int:
     return pid if ok else -1
 
 def filter_by_readiness() -> None:
-    val = input(f"Filter readiness {READINESS}: ").strip().lower()
+    print(f"\nReadiness options: {READINESS}")
+    val = input("Show pieces with status: ").strip().lower()
+
     if not val:
-        print("No filter provided.")
+        print("No status entered.")
         return
-    if hasattr(_LIB, "filter_by_readiness"):
-        _LIB.filter_by_readiness(val)
-    else:
-        found = False
-        for p in _LIB.pieces:
-            if (getattr(p, "readiness_status", "") or "").strip().lower() == val:
-                print("-", _fmt_piece(p))
-                found = True
-        if not found:
-            print(f"No pieces found with '{val}'.")
+
+    found = False
+    print(f"\n--- Pieces marked as '{val}' ---")
+    for p in _LIB.pieces:
+        if p.readiness_status.lower() == val:
+            print("-", _fmt_piece(p))
+            found = True
+
+    if not found:
+        print(f"No pieces found with readiness '{val'.")
+
+def filter_by_attribute() -> None:
+    print("\nSearch by: 1) Composer 2) Genre")
+    choice = input("> ").strip()
+    
+    attr = "composer" if choice == "1" else "genre" if choice == "2" else None
+    if not attr:
+        print("Invalid option.")
+        return
+        
+    search_val = input(f"Enter {attr}: ").strip().lower()
+    
+    found = False
+    print(f"\n--- Results for {attr.capitalize()}: {search_val} ---")
+    for p in _LIB.pieces:
+        # Intuitive partial matching
+        if search_val in getattr(p, attr, "").lower():
+            print("-", _fmt_piece(p))
+            found = True
+            
+    if not found:
+        print(f"No matches found for {attr}: '{search_val}'.")
