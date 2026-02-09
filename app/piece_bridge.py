@@ -235,34 +235,38 @@ def filter_by_readiness() -> None:
         print("No status entered.")
         return
 
-    found = False
-    print(f"\n--- Pieces marked as '{val}' ---")
-    for p in _LIB.pieces:
-        if p.readiness_status.lower() == val:
-            print("-", _fmt_piece(p))
-            found = True
+    if val not in READINESS:
+        print(f"Unknown status '{val}'. Expected one of: {READINESS}")
+        return
 
-    if not found:
-        print(f"No pieces found with readiness '{val'.")
+    # filter the library pieces
+    matches = [p for p in _LIB.pieces if (getattr(p, "readiness_status", "") or "").lower() == val]
+
+    if not matches:
+        print(f"No pieces found with readiness '{val}'.")
+    else:
+        print(f"\n--- Results for: {val} ---")
+        for p in matches:
+            print("-", _fmt_piece(p))
 
 def filter_by_attribute() -> None:
+    """Allows filtering by Composer or Genre to meet README requirements."""
     print("\nSearch by: 1) Composer 2) Genre")
     choice = input("> ").strip()
-    
+
     attr = "composer" if choice == "1" else "genre" if choice == "2" else None
     if not attr:
         print("Invalid option.")
         return
-        
+
     search_val = input(f"Enter {attr}: ").strip().lower()
-    
-    found = False
-    print(f"\n--- Results for {attr.capitalize()}: {search_val} ---")
-    for p in _LIB.pieces:
-        # Intuitive partial matching
-        if search_val in getattr(p, attr, "").lower():
-            print("-", _fmt_piece(p))
-            found = True
-            
-    if not found:
+
+    # Partial matching: 'Beet' will find 'Beethoven'
+    matches = [p for p in _LIB.pieces if search_val in (getattr(p, attr, "") or "").lower()]
+
+    if not matches:
         print(f"No matches found for {attr}: '{search_val}'.")
+    else:
+        print(f"\n--- Results for {attr.capitalize()}: {search_val} ---")
+        for p in matches:
+            print("-", _fmt_piece(p))

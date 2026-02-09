@@ -25,7 +25,7 @@ def pieces_menu():
         elif choice == "3": edit_piece()
         elif choice == "4": delete_piece()
         elif choice == "5": filter_by_readiness()
-        elif choice == "6"; filter_by_attribute()
+        elif choice == "6": filter_by_attribute()
         elif choice == "7": return
         else: print("Invalid.")
 
