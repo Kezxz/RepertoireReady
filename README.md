@@ -20,8 +20,6 @@ The goals are to implement the following features:
 # File Descriptions
 - *main.py*
     - entry point for terminal application, handles the main menu and user interaction
-- *models.py*
-    - defines the core data structure used in the program
 - *piece_logic.py*
     - implements all repertoire-related functionality
 - *setlist_logic.py*

@@ -1,15 +1,9 @@
-# setlist related logic
-
-# create_setlist()
-# add_piece_to_setlist()
-# remove_piece_from_setlist()
-# view_setlist()
-# move_up() and move_down()
-
 # app/setlist_logic.py
 # Simple setlist code based on the class diagram:
 # - Performance = the setlist container
 # - Setlist_Item = one entry inside the setlist (with order_index)
+
+from typing import Dict, List
 
 # Data classes
 class Performance:

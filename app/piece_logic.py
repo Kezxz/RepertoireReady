@@ -1,15 +1,3 @@
-# piece related logic
-
-# add_piece()
-# list_pieces()
-# edit_piece()
-# delete_piece()
-# filter_by_readiness()
-
-
-
-
-
 from datetime import date
 
 # Piece class (Parent class)
@@ -83,42 +71,3 @@ class PieceLibrary():
         
         if not found:
             print(f'No pieces found with {readiness_status} readiness status.')
-
-
-
-
-
-
-if __name__ == '__main__':
-    library = PieceLibrary()
-
-    p1 = Piece(1, "The Ruins of Athens", "Beethoven", "Classical", "Ready", 12)
-    p2 = Piece(2, "Pet Sounds", "The Beach Boys", "Chamber Pop", "Learning", 14)
-    p3 = Piece(3, "XX", "The xx", "Classical", "Indie Pop", 16)
-    p4 = Piece(4, "Jaws", "John Williams", "Classical", "Ready", 22)
-
-    # Testing add_piece
-    library.add_piece(p1)
-    library.add_piece(p2)
-    library.add_piece(p3)
-    library.add_piece(p4)
-    #Testing list_pieces
-    print(f'List Pieces:\n')
-    library.list_pieces()
-
-
-    #Testing edit_piece
-    library.edit_piece(2, "The Lonly Shepherd", "Zamfir", "Classical", "Rehearsing")
-    print(f'\nEdited Pieces:\n')
-    library.list_pieces() 
-
-
-    # Testing delete_piece
-    library.delete_piece(3)
-    print(f'\nDeleted Pieces:\n')
-    library.list_pieces()
-
-
-    #Testing filter_by_readiness
-    print(f'\nFilter:\n')
-    library.filter_by_readiness("Ready")

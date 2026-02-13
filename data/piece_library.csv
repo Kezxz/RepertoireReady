@@ -1,7 +1,7 @@
-piece_id,simple_id,title,composer,genre,readiness_status,user_id,created,updated
-1,1,Ondine,Ravel,Classical,learning,0,2026-02-08,
-2,2,La Plus Que Lente,Debussy,Classical,performance-ready,0,2026-02-08,
-3,3,Fur Elise,Beethoven,Classical,learning,0,2026-02-08,
-4,4,Take Five,Dave Brubeck,Jazz,rehearsing,0,2026-02-08,
-5,5,Lady Bird,Tadd Dameron,Jazz,performance-ready,0,2026-02-08,
-6,6,Hallelujah,Leonard Cohen,Folk,learning,0,2026-02-08,
+piece_id,title,composer,genre,readiness_status,user_id,created,updated
+1,Ondine,Ravel,Classical,learning,0,2026-02-08,
+2,La Plus Que Lente,Debussy,Classical,performance-ready,0,2026-02-08,
+3,Fur Elise,Beethoven,Classical,learning,0,2026-02-08,
+4,Take Five,Dave Brubeck,Jazz,rehearsing,0,2026-02-08,
+5,Lady Bird,Tadd Dameron,Jazz,performance-ready,0,2026-02-08,
+6,Hallelujah,Leonard Cohen,Folk,learning,0,2026-02-08,
