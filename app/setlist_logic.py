@@ -1,11 +1,11 @@
-# setlist related logic
+# app/setlist_logic.py
+# Simple setlist code based on the class diagram:
+# - Performance = the setlist container
+# - Setlist_Item = one entry inside the setlist (with order_index)
 
-# create_setlist()
-# add_piece_to_setlist()
-# remove_piece_from_setlist()
-# view_setlist()
-# move_up() and move_down()
+from typing import Dict, List
 
+# Data classes
 class Performance:
     def __init__(self, performance_id, title, date, location, user_id):
         self.performance_id = performance_id
@@ -32,7 +32,6 @@ def create_setlist(performance_id, title, date, location, user_id):
     Creates a setlist (Performance).
     """
     return Performance(performance_id, title, date, location, user_id)
-
 
 def add_piece_to_setlist(setlist_items, performance_id, piece_id):
     """
