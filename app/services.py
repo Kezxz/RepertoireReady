@@ -1,5 +1,9 @@
-import piece_logic as tpl
-import setlist_logic as sl
+try: 
+    from . import piece_logic as tpl
+    from . import setlist_logic as sl
+except ImportError:
+    import piece_logic as tpl
+    import setlist_logic as sl
 
 READINESS = ["learning", "rehearsing", "performance-ready"]
 

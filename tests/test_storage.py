@@ -1,9 +1,9 @@
 import pytest
 import os
 import csv
-import storage
-import piece_logic as tpl
-import setlist_logic as sl
+from app import storage
+from app import piece_logic as tpl
+from app import setlist_logic as sl
 from datetime import date
 
 @pytest.fixture

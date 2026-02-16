@@ -1,5 +1,5 @@
 import pytest
-import piece_logic as pl
+from app import piece_logic as pl
 from datetime import date
 
 

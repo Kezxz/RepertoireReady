@@ -1,8 +1,11 @@
 import os, csv
 from typing import List, Dict, Tuple
-import piece_logic as tpl
-import setlist_logic as sl
-
+try: 
+    from . import piece_logic as tpl
+    from . import setlist_logic as sl
+except ImportError:
+    import piece_logic as tpl
+    import setlist_logic as sl
 # file locations
 PIECES_CSV = os.path.join("data", "piece_library.csv")
 SETLISTS_CSV = os.path.join("data", "setlist_library.csv")
