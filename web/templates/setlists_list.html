@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Setlists</h2>
+
+  {% if setlists %}
+    <ul>
+      {% for s in setlists %}
+        <li>
+          <strong>{{ s.title }}</strong> |
+          {{ s.date }} |
+          {{ s.location }} |
+          user {{ s.user_id }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No setlists available.</p>
+  {% endif %}
+
+  <p><a href="/">Back to Home</a></p>
+{% endblock %}
