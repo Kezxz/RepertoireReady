@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html style="background-color: #F7FFF7;">
+    <head>
+        <title>List of Pieces</title>
+        <style>
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            li {
+                padding: 8px;
+                display: grid;
+                grid-template-columns: 3fr 2fr 2fr 2fr;
+                gap: 10px;
+            }
+
+            li:nth-child(odd) {
+                background-color:#1a535c81;
+            }
+
+            li:nth-child(even) {
+                background-color: #4ecdc583;
+            }
+
+            li.header {
+                font-weight: bold;
+                background-color: #ffe76d79;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="color: #FF6B6B; text-align: center;">List of Pieces </h1>
+        <p><a href="/">Back to Home</a></p>
+        
+        {% if pieces %}
+            <ul>
+                <li class="header">
+                    <div>Title</div>
+                    <div>Composer</div>
+                    <div>Genre</div>
+                    <div>Status</div>
+                </li>
+            {% for piece in pieces %}
+                <li>
+                    <div>{{ piece.title }}</div>
+                    <div>{{ piece.composer }}</div>
+                    <div>{{ piece.genre }}</div>
+                    <div>{{ piece.readiness_status }}</div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No pieces available.</p>
+        {% endif %}
+    </body>
+</html>
