@@ -1,22 +1,85 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Setlists</h2>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/setlists.css') }}">
 
-  {% if setlists %}
-    <ul>
-      {% for s in setlists %}
-        <li>
-          <strong>{{ s.title }}</strong> |
-          {{ s.date }} |
-          {{ s.location }} |
-          user {{ s.user_id }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No setlists available.</p>
-  {% endif %}
+  <div class="setlists-page">
+    <section class="setlists-hero">
+      <h1>Setlists</h1>
+      <a class="create-btn" href="#">Create Setlist</a>
+    </section>
 
-  <p><a href="/">Back to Home</a></p>
+    <main class="setlists-container">
+      <!-- Popular setlists -->
+      <div class="popular-card">
+        <div class="popular-thumb" aria-hidden="true"></div>
+        <div>
+          <h3 class="popular-title">Popular Setlist #1</h3>
+          <p class="popular-desc">
+            This is a popular setlist for intimate events where the music is not the focus,
+            but rather to provide vibes for the background.
+          </p>
+          <a class="small-btn" href="#">View</a>
+        </div>
+      </div>
+
+      <div class="popular-card">
+        <div class="popular-thumb" aria-hidden="true"></div>
+        <div>
+          <h3 class="popular-title">Popular Setlist #2</h3>
+          <p class="popular-desc">
+            This is a popular setlist for a party or other event where people will be focusing
+            on the performance.
+          </p>
+          <a class="small-btn" href="#">View</a>
+        </div>
+      </div>
+
+      <div class="popular-card">
+        <div class="popular-thumb" aria-hidden="true"></div>
+        <div>
+          <h3 class="popular-title">Popular Setlist #3</h3>
+          <p class="popular-desc">
+            This is a popular setlist for places like jazz clubs.
+          </p>
+          <a class="small-btn" href="#">View</a>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="setlists-table">
+          <thead>
+            <tr>
+              <th class="underlined">Setlist Title</th>
+              <th>Purpose/Event</th>
+              <th>NumPieces/Runtime</th>
+              <th>Last Updated</th>
+              <th>View/Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if setlists %}
+              {% for s in setlists %}
+                <tr>
+                  <td><a href="#">{{ s.title }}</a></td>
+                  <td>{{ s.location }}</td>
+                  <td>—</td>
+                  <td>{{ s.date }}</td>
+                  <td><a href="#">View/Edit</a></td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="5">No setlists available.</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+
+      <p style="text-align:center; margin-top:18px;">
+        <a href="/">Back to Home</a>
+      </p>
+    </main>
+  </div>
 {% endblock %}
