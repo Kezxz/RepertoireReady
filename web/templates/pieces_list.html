@@ -27,11 +27,29 @@
                 font-weight: bold;
                 background-color: #ffe76d79;
             }
+
+            .button {
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                display: inline-block;
+                text-decoration: none;
+                cursor: pointer;
+                margin-top: 15px;
+            }
+
+            .button1,
+            .button2{
+                background-color: black;
+            }
         </style>
     </head>
     <body>
         <h1 style="color: #FF6B6B; text-align: center;">List of Pieces </h1>
         <p><a href="/">Back to Home</a></p>
+        
+        <a href="{{ url_for('pieces.pieces_form') }}" class= "button button1">ADD PIECE</a>
         
         {% if pieces %}
             <ul>
@@ -47,6 +65,11 @@
                     <div>{{ piece.composer }}</div>
                     <div>{{ piece.genre }}</div>
                     <div>{{ piece.readiness_status }}</div>
+                    <form method="post"
+                    action = "{{ url_for('pieces.delete_piece', piece_id=piece.piece_id)}}"
+                    style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
                 </li>
             {% endfor %}
             </ul>

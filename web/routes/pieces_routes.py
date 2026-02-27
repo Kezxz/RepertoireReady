@@ -1,21 +1,51 @@
-from flask import Blueprint, render_template
-from app.piece_logic import PieceLibrary, Piece
+from flask import Blueprint, render_template, request, redirect, url_for
+from app.piece_logic import Piece, library
 
 pieces_bp = Blueprint("pieces", __name__, url_prefix="/pieces")
-
-
-# Below can be deleted later. It's for testing
-library = PieceLibrary()
-library.add_piece(Piece(1, "Moonlight Sonata", "Beethoven", "Classical", "In Progress", 101))
-library.add_piece(Piece(2, "Clair de Lune", "Debussy", "Classical", "Ready", 102))
-library.add_piece(Piece(3, "Nocturne in E-flat Major", "Chopin", "Classical", "In Progress", 103))
-library.add_piece(Piece(4, "The Four Seasons", "Vivaldi", "Classical", "Ready", 104))
 
 
 
 @pieces_bp.get("/")
 def pieces_home():
-
-    # Placeholder
-
     return render_template("pieces_list.html", pieces = library.pieces)
+
+
+# Show form
+@pieces_bp.get("/form")
+def pieces_form():
+    return render_template("pieces_form.html")
+
+# Handle form submission
+@pieces_bp.post("/form")
+def add_piece():
+    
+    title = request.form.get("title")
+    composer = request.form.get("composer")
+    genre = request.form.get("genre")
+    readiness_status = request.form.get("readiness_status")
+
+    #Auto generate piece_id
+    piece_id = len(library.pieces) + 1
+
+    # Temporary user_id
+    user_id = 1
+
+    new_piece = Piece(
+        piece_id,
+        title,
+        composer,
+        genre,
+        readiness_status,
+        user_id
+    )
+
+    library.add_piece(new_piece)
+
+    return redirect(url_for("pieces.pieces_home"))
+
+
+# Delete route
+@pieces_bp.post("/delete/<int:piece_id>")
+def delete_piece(piece_id):
+    library.delete_piece(piece_id)
+    return redirect(url_for("pieces.pieces_home"))

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Piece</title>
+    </head>
+
+    <body>
+        <h1>Add New Piece</h1>
+
+        <form method="post" action="{{ url_for('pieces.add_piece') }}">
+
+            <label>Title:</label><br>
+            <input type="text" name="title" required> <br><br>
+
+            <label>Composer:</label><br>
+            <input type="text" name="composer" required> <br><br>
+
+            <label>Genre:</label><br>
+            <input type="text" name="genre" required> <br><br>
+
+            <label>Readiness Status:</label><br>
+            <input type="text" name="readiness_status" required> <br><br>
+
+            <button type="submit">Save Piece</button>
+        </form>
+
+        <br>
+        <a href="{{ url_for('pieces.pieces_home') }}">Back to List</a>
+        
+    </body>
+</html>

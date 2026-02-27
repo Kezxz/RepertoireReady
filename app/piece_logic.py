@@ -71,3 +71,6 @@ class PieceLibrary():
         
         if not found:
             print(f'No pieces found with {readiness_status} readiness status.')
+
+    
+library = PieceLibrary()
