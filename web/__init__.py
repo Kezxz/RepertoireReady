@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 def create_app():
     app = Flask(__name__)
@@ -12,12 +12,6 @@ def create_app():
 
     @app.get("/")
     def home():
-        return (
-            '<h1>RepertoireReady</h1>'
-            '<ul>'
-            '<li><a href="/pieces">Pieces</a></li>'
-            '<li><a href="/setlists">Setlists</a></li>'
-            "</ul>"
-        )
+        return render_template("index.html")
 
     return app

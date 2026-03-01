@@ -1,14 +1,15 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset = "utf-8" />
     <title>RepertoireReady</title>
+    {% block head %}{% endblock %}
   </head>
   <body>
     <nav>
-      <a href="/">Home</a> |
-      <a href="/pieces">Pieces</a> |
-      <a href="/setlists">Setlists</a>
+      <a href = "/">Home</a> |
+      <a href = "/pieces">Pieces</a> |
+      <a href = "/setlists">Setlists</a>
     </nav>
     <hr />
     {% block content %}{% endblock %}

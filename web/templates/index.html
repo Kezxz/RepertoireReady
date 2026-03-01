@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel = "stylesheet" href = "{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div class = "home-page">
+    <section class = "home-hero">
+      <h1>RepertoireReady</h1>
+      <p>Organize pieces, track readiness, and plan performances.</p>
+      <div class = "home-actions">
+        <a class = "btn primary" href = "/pieces">View Pieces</a>
+        <a class = "btn" href = "/setlists">View Setlists</a>
+      </div>
+    </section>
+
+    <section class = "home-grid">
+      <a class = "card" href = "/pieces">
+        <h2>Pieces</h2>
+        <p>Add, edit, filter by readiness, composer, and genre.</p>
+      </a>
+
+      <a class = "card" href = "/setlists">
+        <h2>Setlists</h2>
+        <p>Group pieces into planned programs and performances.</p>
+      </a>
+    </section>
+  </div>
+{% endblock %}
