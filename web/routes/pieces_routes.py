@@ -1,13 +1,16 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.piece_logic import Piece, library
+from app.piece_logic import Piece
+from app.storage import load_pieces, save_pieces
+from datetime import date
 
 pieces_bp = Blueprint("pieces", __name__, url_prefix="/pieces")
 
 
-
+# load piece from data
 @pieces_bp.get("/")
 def pieces_home():
-    return render_template("pieces_list.html", pieces = library.pieces)
+    pieces = load_pieces()
+    return render_template("pieces_list.html", pieces = pieces)
 
 
 # Show form
@@ -25,7 +28,8 @@ def add_piece():
     readiness_status = request.form.get("readiness_status")
 
     #Auto generate piece_id
-    piece_id = len(library.pieces) + 1
+    pieces = load_pieces()
+    piece_id = max([p.piece_id for p in pieces], default = 0) + 1
 
     # Temporary user_id
     user_id = 1
@@ -39,7 +43,10 @@ def add_piece():
         user_id
     )
 
-    library.add_piece(new_piece)
+    # timestamp piece and add to list
+    new_piece.created = date.today()
+    pieces.append(new_piece)
+    save_pieces(pieces)
 
     return redirect(url_for("pieces.pieces_home"))
 
@@ -47,5 +54,7 @@ def add_piece():
 # Delete route
 @pieces_bp.post("/delete/<int:piece_id>")
 def delete_piece(piece_id):
-    library.delete_piece(piece_id)
+    pieces = load_pieces()
+    pieces = [p for p in pieces if p.piece_id != piece_id]
+    save_pieces(pieces)
     return redirect(url_for("pieces.pieces_home"))
